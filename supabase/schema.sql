@@ -1,0 +1,16 @@
+create extension if not exists pgcrypto;
+create table if not exists public.meeting_history(id uuid primary key default gen_random_uuid(),user_id uuid not null references auth.users(id) on delete cascade,client_id uuid not null,title text not null,transcript text not null,minutes jsonb not null default '{}'::jsonb,created_at timestamptz not null default now(),unique(user_id,client_id));
+create table if not exists public.tickets(id uuid primary key default gen_random_uuid(),public_id text not null unique default upper(substr(replace(gen_random_uuid()::text,'-',''),1,8)),user_id uuid not null references auth.users(id) on delete cascade,user_email text not null,subject text not null check(char_length(subject) between 1 and 80),status text not null default 'open' check(status in('open','closed')),admin_notified boolean not null default false,created_at timestamptz not null default now());
+create table if not exists public.ticket_messages(id uuid primary key default gen_random_uuid(),ticket_id uuid not null references public.tickets(id) on delete cascade,sender text not null check(sender in('user','admin')),body text not null check(char_length(body) between 1 and 5000),external_id text unique,created_at timestamptz not null default now());
+alter table public.meeting_history enable row level security;alter table public.tickets enable row level security;alter table public.ticket_messages enable row level security;
+create policy "users read own history" on public.meeting_history for select to authenticated using((select auth.uid())=user_id);
+create policy "users insert own history" on public.meeting_history for insert to authenticated with check((select auth.uid())=user_id);
+create policy "users update own history" on public.meeting_history for update to authenticated using((select auth.uid())=user_id) with check((select auth.uid())=user_id);
+create policy "users delete own history" on public.meeting_history for delete to authenticated using((select auth.uid())=user_id);
+create policy "users read own tickets" on public.tickets for select to authenticated using((select auth.uid())=user_id);
+create policy "users create own tickets" on public.tickets for insert to authenticated with check((select auth.uid())=user_id and user_email=(select auth.jwt()->>'email'));
+create policy "users read own messages" on public.ticket_messages for select to authenticated using(exists(select 1 from public.tickets t where t.id=ticket_id and t.user_id=(select auth.uid())));
+create policy "users send own messages" on public.ticket_messages for insert to authenticated with check(sender='user' and exists(select 1 from public.tickets t where t.id=ticket_id and t.user_id=(select auth.uid())));
+create index if not exists meeting_history_user_created_idx on public.meeting_history(user_id,created_at desc);
+create index if not exists tickets_user_created_idx on public.tickets(user_id,created_at desc);
+create index if not exists ticket_messages_ticket_created_idx on public.ticket_messages(ticket_id,created_at);
