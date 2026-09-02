@@ -24,11 +24,11 @@
     </div>
     <div class="feature-card support-card">
       <div class="feature-heading"><div><span class="feature-icon coral">✉</span><h2>お問い合わせ</h2><p>返信はこの画面にも表示されます</p></div><span id="support-state" class="state-pill">ログインが必要</span></div>
-      <form id="support-form"><label>件名<input id="support-subject" maxlength="80" placeholder="例：文字起こしについて" required/></label><label>お問い合わせ内容<textarea id="support-message" maxlength="2000" placeholder="困っていることやご意見を入力してください" required></textarea></label><button class="primary-form" type="submit">アプリ内から送信</button><p id="support-feedback" class="form-feedback"></p></form>
+      <form id="support-form"><label>件名<input id="support-subject" maxlength="80" placeholder="例：文字起こしについて" required/></label><label>お問い合わせ内容<textarea id="support-message" maxlength="2000" placeholder="困っていることやご意見を入力してください" required></textarea></label><button class="primary-form" type="submit">アプリ内から送信</button><p class="legal-note">送信すると、<a href="./privacy.html">プライバシーポリシー</a>に従って内容と返信が保存されます。</p><p id="support-feedback" class="form-feedback"></p></form>
       <div id="ticket-list" class="ticket-list"></div>
     </div>
   </section>
-  <section class="login-panel" id="login-panel" hidden><div class="login-dialog"><button class="dialog-close" id="login-close" aria-label="閉じる">×</button><span class="login-art">✦</span><h2>履歴を端末間で同期</h2><p id="login-copy">メールに届くログインリンクを開くだけ。パスワードは不要です。</p><form id="login-form"><input id="login-email" type="email" autocomplete="email" placeholder="メールアドレス" required/><button type="submit">ログインリンクを送る</button></form><button id="logout-button" class="logout-button" hidden>ログアウト</button><p id="login-feedback" class="form-feedback"></p></div></section>
+  <section class="login-panel" id="login-panel" hidden><div class="login-dialog"><button class="dialog-close" id="login-close" aria-label="閉じる">×</button><span class="login-art">✦</span><h2>履歴を端末間で同期</h2><p id="login-copy">メールに届くログインリンクを開くだけ。パスワードは不要です。</p><form id="login-form"><input id="login-email" type="email" autocomplete="email" placeholder="メールアドレス" required/><button type="submit">ログインリンクを送る</button></form><p class="legal-note">続行すると、<a href="./terms.html">利用規約</a>と<a href="./privacy.html">プライバシーポリシー</a>に同意したものとみなされます。</p><button id="logout-button" class="logout-button" hidden>ログアウト</button><p id="login-feedback" class="form-feedback"></p></div></section>
   <section class="notice"><b>録音前に必ず参加者へ伝えてください</b><p>参加者の同意を得て録画・録音したファイルだけに使用してください。録画ファイル自体はクラウドへ保存されません。</p></section>
-  <footer>Meeting Canvas — colorful, local-first meeting notes</footer>
+  <footer><p>Meeting Canvas — colorful, local-first meeting notes</p><nav aria-label="法的情報"><a href="./terms.html">利用規約</a><a href="./privacy.html">プライバシーポリシー</a></nav></footer>
 </main><script type="module" src="./src/app.js"></script></body></html>
