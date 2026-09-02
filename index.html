@@ -1,1 +1,34 @@
-<!doctype html><html lang="ja"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><meta name="theme-color" content="#101827"/><meta name="description" content="録画から議事録と1枚図解を端末内で作る無料ツール"/><title>Meeting Canvas</title><link rel="stylesheet" href="./src/styles.css"/></head><body><main><header><div class="brand">Meeting <span>Canvas</span></div><div class="privacy">🔒 録画は端末内で処理</div></header><section class="hero"><p class="eyebrow">ZOOM・GOOGLE MEET 対応</p><h1>録画を入れるだけ。<br/><em>議事録と1枚図解</em>が完成。</h1><p>無料・登録不要。会議の録画はサーバーへ保存しません。</p></section><section class="workspace"><div class="input card"><div class="step">01</div><h2>会議を読み込む</h2><label>会議名<input id="name" placeholder="例：文化祭実行委員会"/></label><label class="drop" id="drop"><input id="file" type="file" accept="audio/*,video/*"/><b>録画・録音ファイルを選ぶ</b><small>MP3 / M4A / WAV / 対応動画</small></label><div class="status"><i id="dot"></i><span id="status">待機中</span></div><div class="or">または</div><label>文字起こしを貼り付け<textarea id="transcript" placeholder="ZoomやMeetの文字起こしをここへ…"></textarea></label><button class="ghost" id="sample">サンプルで試す</button></div><div class="result card"><div class="step">02</div><h2>自動まとめ</h2><div id="result"><div class="empty"><div>✦</div><p>文字起こしが入ると<br/>ここに議事録が表示されます</p></div></div></div></section><section class="notice"><b>録音前に必ず参加者へ伝えてください</b><p>このアプリは、参加者の同意を得て録画・録音したファイルだけに使用してください。</p></section><footer>Meeting Canvas — local-first meeting notes</footer></main><script type="module" src="./src/app.js"></script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#101827"/><meta name="description" content="録画から議事録とカラフル図解を作る無料ツール"/>
+  <title>Meeting Canvas</title><link rel="stylesheet" href="./src/styles.css"/><link rel="stylesheet" href="./src/features.css"/>
+</head>
+<body><main>
+  <header><div class="brand">Meeting <span>Canvas</span></div><div class="header-actions"><span class="privacy">🔒 録画は端末内で処理</span><button id="account-button" class="account-button">ログイン</button></div></header>
+  <section class="hero"><p class="eyebrow">ZOOM・GOOGLE MEET 対応</p><h1>録画を入れるだけ。<br/><em>議事録と1枚図解</em>が完成。</h1><p>録画は端末内で処理。ログインすると履歴をスマホとPCで同期できます。</p></section>
+  <section class="workspace">
+    <div class="input card"><div class="step">01</div><h2>会議を読み込む</h2>
+      <label>会議名<input id="name" placeholder="例：文化祭実行委員会"/></label>
+      <label class="drop" id="drop"><input id="file" type="file" accept="audio/*,video/*"/><b>録画・録音ファイルを選ぶ</b><small>MP3 / M4A / WAV / 対応動画</small></label>
+      <div class="status"><i id="dot"></i><span id="status">待機中</span></div><div class="or">または</div>
+      <label>文字起こしを貼り付け<textarea id="transcript" placeholder="ZoomやMeetの文字起こしをここへ…"></textarea></label><button class="ghost" id="sample">サンプルで試す</button>
+    </div>
+    <div class="result card"><div class="step">02</div><h2>自動まとめ</h2><div id="result"><div class="empty"><div>✦</div><p>文字起こしが入ると<br/>ここに議事録が表示されます</p></div></div></div>
+  </section>
+  <section class="feature-grid">
+    <div class="feature-card history-card">
+      <div class="feature-heading"><div><span class="feature-icon">◷</span><h2>会議履歴</h2><p id="history-mode">この端末に保存されます</p></div><button id="save-history" class="small-primary">現在の会議を保存</button></div>
+      <div id="history-list" class="history-list"><div class="feature-empty">保存した会議はまだありません</div></div>
+    </div>
+    <div class="feature-card support-card">
+      <div class="feature-heading"><div><span class="feature-icon coral">✉</span><h2>お問い合わせ</h2><p>返信はこの画面にも表示されます</p></div><span id="support-state" class="state-pill">ログインが必要</span></div>
+      <form id="support-form"><label>件名<input id="support-subject" maxlength="80" placeholder="例：文字起こしについて" required/></label><label>お問い合わせ内容<textarea id="support-message" maxlength="2000" placeholder="困っていることやご意見を入力してください" required></textarea></label><button class="primary-form" type="submit">アプリ内から送信</button><p id="support-feedback" class="form-feedback"></p></form>
+      <div id="ticket-list" class="ticket-list"></div>
+    </div>
+  </section>
+  <section class="login-panel" id="login-panel" hidden><div class="login-dialog"><button class="dialog-close" id="login-close" aria-label="閉じる">×</button><span class="login-art">✦</span><h2>履歴を端末間で同期</h2><p id="login-copy">メールに届くログインリンクを開くだけ。パスワードは不要です。</p><form id="login-form"><input id="login-email" type="email" autocomplete="email" placeholder="メールアドレス" required/><button type="submit">ログインリンクを送る</button></form><button id="logout-button" class="logout-button" hidden>ログアウト</button><p id="login-feedback" class="form-feedback"></p></div></section>
+  <section class="notice"><b>録音前に必ず参加者へ伝えてください</b><p>参加者の同意を得て録画・録音したファイルだけに使用してください。録画ファイル自体はクラウドへ保存されません。</p></section>
+  <footer>Meeting Canvas — colorful, local-first meeting notes</footer>
+</main><script type="module" src="./src/app.js"></script></body></html>
