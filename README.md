@@ -10,6 +10,9 @@ Zoom / Google Meet の録画・録音から、文字起こし、議事録、1枚
 - 要約・決定事項・アクションを自動整理
 - Markdown議事録とPNG図解を保存
 - スマートフォン対応、APIキー不要
+- 会議履歴を端末内へ保存
+- Supabase設定後はスマホ・PC間で履歴を同期
+- アプリ内お問い合わせとGmail返信のアプリ内表示
 
 ## 使い方
 
@@ -29,6 +32,10 @@ npm test
 ## GitHub Pages
 
 リポジトリの `Settings > Pages > Source` を `GitHub Actions` にすると、mainへのpushで公開されます。
+
+## 端末間同期とお問い合わせ
+
+クラウド同期とGmail連携を有効にする場合は、[CLOUD_SETUP.md](./CLOUD_SETUP.md)の手順でSupabaseとGoogle Apps Scriptを設定してください。未設定でも端末内の履歴保存と議事録作成は利用できます。
 
 ## プライバシー
 
